@@ -1,5 +1,5 @@
-browserify-file
-===============
+fileify
+=======
 
 Middleware for browserify to load non-js files like templates.
 
@@ -9,15 +9,15 @@ methods
 ````javascript
 var express = require('express'); // or connect, whatevs
 var app = express.createServer();
-var browserifyFile = require('browserify-file');
+var fileify = require('fileify');
 
 var bundle = browserify();
-bundle.use(browserifyFile);
+bundle.use(fileify);
 app.use(bundle)
 ````
 
-browserifyFile(name, dir, ext)
-------------------------------
+fileify(name, dir, ext)
+-----------------------
 
 Make the files in `dir` available through `require(name)`.
 
@@ -26,7 +26,7 @@ Make the files in `dir` available through `require(name)`.
 Optionally you can specify an extension `ext` which can be a filter function,
 regexp, or string to match extensions. By default, returns all files.
 
-browserifyFile will do a recursive traversal of `dir` and return all the files
+fileify will do a recursive traversal of `dir` and return all the files
 except for hidden ones unless you specify a callback for `ext`.
 
 example
@@ -48,8 +48,8 @@ var bundle = browserify({
 });
 app.use(bundle);
 
-var browserifyFile = require('browserify-file');
-bundle.use(browserifyFile('files', __dirname + '/files'));
+var fileify = require('fileify');
+bundle.use(fileify('files', __dirname + '/files'));
 ````
 
 ````html
@@ -87,7 +87,7 @@ installation
 
 With [npm](http://npmjs.org) do:
 
-    npm install browserify-file
+    npm install fileify
 
 license
 =======

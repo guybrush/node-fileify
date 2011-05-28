@@ -11,5 +11,5 @@ var bundle = browserify({
 });
 app.use(bundle);
 
-var browserifyFile = require('browserify-file');
-bundle.use(browserifyFile('files', __dirname + '/files'));
+var fileify = require('fileify');
+bundle.use(fileify('files', __dirname + '/files'));
