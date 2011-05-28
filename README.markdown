@@ -6,7 +6,15 @@ Middleware for browserify to load non-js files like templates.
 methods
 =======
 
+````javascript
+var express = require('express'); // or connect, whatevs
+var app = express.createServer();
 var browserifyFile = require('browserify-file');
+
+var bundle = browserify();
+bundle.use(browserifyFile);
+app.use(bundle)
+````
 
 browserifyFile(name, dir, ext)
 ------------------------------
