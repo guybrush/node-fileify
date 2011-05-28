@@ -16,7 +16,7 @@
     },
     "repository" : {
         "type" : "git",
-        "url" : "http://github.com/substack/browserify-file.git"
+        "url" : "http://github.com/substack/node-fileify.git"
     },
     "keywords" : [
         "browserify",
