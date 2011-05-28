@@ -82,6 +82,13 @@ bundle.use(browserifyFile('files', __dirname + '/files'));
 </html>
 ````
 
+installation
+============
+
+With [npm](http://npmjs.org) do:
+
+    npm install browserify-file
+
 license
 =======
 
