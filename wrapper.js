@@ -1,3 +1,3 @@
-_browserifyRequire.modules[$name] = function () {
+require.modules[$name] = function () {
     return $vars
 };
