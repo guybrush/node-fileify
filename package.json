@@ -1,6 +1,6 @@
 {
     "name" : "fileify",
-    "version" : "0.1.0",
+    "version" : "0.1.1",
     "description" : "Browserify middleware to load entire files into javascript variables",
     "main" : "index.js",
     "directories" : {

@@ -44,6 +44,6 @@ module.exports = function (target, dir, ext) {
                 return JSON.stringify(bodies);
             })
         ;
-        bundle.include(file, path.normalize('/' + target), body);
+        bundle.include(file, path.normalize('/node_modules/' + target), body);
     };
 };
