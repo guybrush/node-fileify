@@ -3,8 +3,8 @@ var path = require('path');
 var findit = require('findit');
 var Seq = require('seq');
 
-module.exports = function (name, dir, ext) {
-    if (!name) throw new Error('Name required');
+module.exports = function (target, dir, ext) {
+    if (!target) throw new Error('Target name required');
     if (!dir) throw new Error('Directory or files required');
     
     return function (bundle) {
@@ -38,15 +38,12 @@ module.exports = function (name, dir, ext) {
             return acc;
         }, {});
         
-        bundle.register(function (body, file) {
-            if (file === __dirname + '/browser/files.js') {
-                return body.replace(/\$bodies/, function () {
-                    return JSON.stringify(bodies);
-                });
-            }
-            else return body;
-        });
-        
-        bundle.require(__dirname + '/browser/files.js');
+        var file = __dirname + '/browser/files.js';
+        var body = fs.readFileSync(file, 'utf8')
+            .replace(/\$bodies/, function () {
+                return JSON.stringify(bodies);
+            })
+        ;
+        bundle.include(file, path.normalize('/' + target), body);
     };
 };
