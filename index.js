@@ -33,7 +33,7 @@ module.exports = function (target, dir, ext) {
         });
         
         var bodies = files.reduce(function (acc, file) {
-            var rel = file.slice(dir.length);
+            var rel = file.slice(dir.length + 1);
             acc[rel] = fs.readFileSync(file, 'utf8');
             return acc;
         }, {});
