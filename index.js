@@ -9,6 +9,8 @@ module.exports = function (target, dir, ext) {
     
     return function (bundle) {
         var files = findit.sync(dir).filter(function (absfile) {
+            if (fs.statSync(absfile).isDirectory()) return false;
+            
             var file = absfile.replace(dir.match(/\/$/) ? dir : dir + '/', '');
             var e = (file.match(/\.([^\/.]+)$/) || [,''])[1];
             
@@ -44,6 +46,7 @@ module.exports = function (target, dir, ext) {
                 return JSON.stringify(bodies);
             })
         ;
+        
         bundle.include(file, path.normalize('/node_modules/' + target), body);
     };
 };
