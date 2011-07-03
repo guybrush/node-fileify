@@ -13,6 +13,7 @@ exports.static = function () {
     vm.runInNewContext(src, c);
     assert.deepEqual(c.require('files', '/'), {
         'bar.sh' : '#!/bin/bash\necho bar!\n',
-        'foo.txt' : 'This is the foo file!\n'
+        'foo.txt' : 'This is the foo file!\n',
+        'baz/quux.js' : 'console.log(\'quux!\')\n',
     });
 };
