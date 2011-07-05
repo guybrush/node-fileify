@@ -47,6 +47,6 @@ module.exports = function (target, dir, ext) {
             })
         ;
         
-        bundle.include(file, path.normalize('/node_modules/' + target), body);
+        bundle.include(null, path.normalize('/node_modules/' + target), body);
     };
 };
