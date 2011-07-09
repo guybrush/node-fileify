@@ -31,14 +31,31 @@ module.exports = function (target, dir, optsOrEx) {
         }
     };
     
-    return function (bundle) {
+    var watches = {};
+    var self = function (bundle) {
         var files = [];
         
-        findit.sync(dir, function (file, stat) {
+        function finder (file, stat) {
             if (stat.isDirectory()) {
                 if (opts.watch) {
+                    watches[file] = true;
                     fs.watchFile(file, function (curr, prev) {
-                        
+                        if (curr.nlink === 0) {
+                            // deleted
+                        }
+                        else {
+                            // modified
+                            fs.readdir(file, function (err, xs) {
+                                var rescan = false;
+                                xs.forEach(function (x) {
+                                    var f = path.resolve(dir, x);
+                                    if (files.indexOf(f) < 0) {
+                                        files.push(f);
+                                        include(files);
+                                    }
+                                });
+                            });
+                        }
                     });
                 }
             }
@@ -47,12 +64,24 @@ module.exports = function (target, dir, optsOrEx) {
                 files.push(file);
                 
                 if (opts.watch) {
+                    watches[file] = true;
                     fs.watchFile(file, function (curr, prev) {
-                        
+                        if (curr.nlink === 0) {
+                            // deleted
+                            var i = files.indexOf(file);
+                            if (i >= 0) files.splice(i, 1);
+                            include(files);
+                        }
+                        else {
+                            include(files);
+                        }
                     });
                 }
             }
-        });
+        }
+        
+        finder(dir, { isDirectory : function () { return true }});
+        findit.sync(dir, finder);
         
         var include = function (files) {
             var dst = path.normalize('/node_modules/' + target);
@@ -80,5 +109,13 @@ module.exports = function (target, dir, optsOrEx) {
         };
         include(files);
     };
+    
+    self.end = function () {
+        Object.keys(watches).forEach(function (file) {
+            fs.unwatchFile(file);
+        });
+    };
+    
+    return self;
 };
 

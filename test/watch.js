@@ -17,9 +17,8 @@ exports.watch = function () {
     
     var x0 = Math.random();
     write('x.txt', x0, function () {
-        var b = browserify().use(
-            fileify('files', __dirname + '/watch', { watch : true })
-        );
+        var fn = fileify('files', __dirname + '/watch', { watch : true });
+        var b = browserify().use(fn);
         
         var c0 = {};
         vm.runInNewContext(b.bundle(), c0);
@@ -39,6 +38,7 @@ exports.watch = function () {
                     'x.txt' : x1,
                     'y.txt' : y0,
                 });
+                fn.end();
             });
         });
     });
