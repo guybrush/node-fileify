@@ -16,18 +16,29 @@ bundle.use(fileify);
 app.use(bundle)
 ````
 
-fileify(name, dir, ext)
------------------------
+fileify(name, dir, opts)
+------------------------
 
 Make the files in `dir` available through `require(name)`.
 
 `require(name)` will then return the files hashed by filename.
 
-Optionally you can specify an extension `ext` which can be a filter function,
-regexp, or string to match extensions. By default, returns all files.
-
 fileify will do a recursive traversal of `dir` and return all the files
-except for hidden ones unless you specify a callback for `ext`.
+except for hidden ones unless you specify a callback for `opts.extension`.
+
+Returns a middleware function with a '.end()' function to stop all the watches
+in watch mode.
+
+opts can have:
+
+* watch - if true, update the fileified bundle when files change
+
+* extension - a filter function, regexp, string extension, or array of
+extensions to limit extensions to
+
+If opts is not an object and not an array it will be interpreted as the
+extension.
+
 
 example
 =======
