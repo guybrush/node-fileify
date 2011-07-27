@@ -12,6 +12,7 @@ function write (file, x, cb) {
 }
 
 exports.watch = function () {
+    try { fs.mkdir(__dirname + '/watch', '0777') } catch (e) {}
     try { fs.unlinkSync(__dirname + '/watch/x.txt') } catch (e) {}
     try { fs.unlinkSync(__dirname + '/watch/y.txt') } catch (e) {}
     
