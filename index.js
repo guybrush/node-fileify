@@ -48,8 +48,11 @@ module.exports = function (target, dir, optsOrEx) {
                             fs.readdir(file, function (err, xs) {
                                 var rescan = false;
                                 xs.forEach(function (x) {
-                                    var f = path.resolve(dir, x);
-                                    if (files.indexOf(f) < 0) {
+                                    var f = path.resolve(file, x);
+                                    if (fs.statSync(f).isDirectory()) {
+                                        findit.sync(f, finder);
+                                    }
+                                    else if (files.indexOf(f) < 0) {
                                         files.push(f);
                                         include(files);
                                     }
