@@ -42,7 +42,7 @@ exports.watch = function () {
                     'y.txt' : y0,
                 });
                 var z0 = Math.random();
-                write('subdir/z.txt', y0, function () {
+                write('subdir/z.txt', z0, function () {
                     var c3 = {};
                     vm.runInNewContext(b.bundle(), c3);
                     assert.deepEqual(c3.require('files', '/'), {
